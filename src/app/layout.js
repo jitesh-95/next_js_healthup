@@ -1,7 +1,13 @@
 // src/app/layout.js
-import TopMenu from '@/components/TopMenu';
-import ThemeContextProvider from './ThemeContext';
 import { cookies } from 'next/headers'
+import { lazy, Suspense } from 'react';
+import { Skeleton } from '@mui/material';
+
+import './globals.css';
+import ThemeContextProvider from './ThemeContext';
+
+const TopMenu = lazy(() => import('@/components/TopMenu'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 export const metadata = {
   title: 'HealthUp',
@@ -17,8 +23,9 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ThemeContextProvider isDarkMode={isDark}>
-          <TopMenu />
+          <Suspense fallback={<Skeleton variant="rectangular" />}><TopMenu /></Suspense>
           {children}
+          <Suspense fallback={<Skeleton variant="rectangular" />}><Footer /></Suspense>
         </ThemeContextProvider>
       </body>
     </html>

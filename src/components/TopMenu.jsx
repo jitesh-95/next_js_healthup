@@ -34,7 +34,6 @@ export default function TopMenu() {
         backdropFilter: 'blur(3px)', // blur effect
         backgroundColor: `${darkMode ? 'rgba(0, 0, 0, 0.72)' : 'rgba(255, 255, 255, 0.72)'}`, // translucent white
         WebkitBackdropFilter: 'blur(3px)', // Safari support
-        mb: 2
       }}
     >
       <Container className={styles.menuContainer} disableGutters maxWidth={false}>

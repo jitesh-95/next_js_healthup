@@ -40,3 +40,8 @@ a {
     color-scheme: dark;
   }
 }
+
+.layout {
+  min-height: calc(100vh - 106px);
+  padding: 10px;
+}
