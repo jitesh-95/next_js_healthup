@@ -16,12 +16,14 @@ import { Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/mater
 
 import styles from '../styles/topmenu.module.css'
 import { useThemeMode } from "@/app/ThemeContext";
+import { usePathname } from "next/navigation";
 
 const pages = ["Custom Recipe", "Weekly Plan", "About"];
 
 export default function TopMenu() {
   const { darkMode, toggleTheme } = useThemeMode();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const pathname = usePathname();
 
   const toggleDrawer = (state) => () => setOpenDrawer(state);
 
@@ -29,11 +31,10 @@ export default function TopMenu() {
     <AppBar
       position="sticky"
       sx={{
-        borderBottom: `1px solid ${darkMode ? 'rgb(57, 57, 57)' : 'rgb(212, 210, 210)'}`,
         boxShadow: 'none',
         backdropFilter: 'blur(3px)', // blur effect
-        backgroundColor: `${darkMode ? 'rgba(0, 0, 0, 0.72)' : 'rgba(255, 255, 255, 0.72)'}`, // translucent white
-        WebkitBackdropFilter: 'blur(3px)', // Safari support
+        backgroundColor: `${darkMode ? 'rgba(0, 0, 0, 0.72)' : 'rgba(234, 209, 238, 0.72)'}`, // translucent white
+        WebkitBackdropFilter: 'blur(3px)', // Safari support,
       }}
     >
       <Container className={styles.menuContainer} disableGutters maxWidth={false}>
@@ -46,9 +47,8 @@ export default function TopMenu() {
               sx={{
                 fontWeight: 700,
                 color: `${darkMode ? '#fff' : '#121212'}`,
-                pt: 1,
-                pb: 1,
-                ml: 1
+                mx: 2,
+                my: 1
               }}
             >
               HealthUP
@@ -64,23 +64,23 @@ export default function TopMenu() {
             justifyContent: "center",
           }}
         >
-          {pages.map((page) => (
-            <Link
-              key={page}
-              href={page === "Custom Recipe" ? "/" : `/${page.toLowerCase().replace(" ", "-")}`}
-              passHref
-              className={`${styles.linkDecoration}`}
-            >
-              <Typography variant="body1"
-                sx={{
-                  color: `${darkMode ? '#fff' : '#121212'}`,
-                  mr: 2,
-                  ml: 2
-                }}>
-                {page}
-              </Typography>
-            </Link>
-          ))}
+          {pages.map((page) => {
+            const path = `/${page.toLowerCase().replace(" ", "-")}`;
+            const isActive = pathname === path;
+            return (
+              <Link
+                key={page}
+                href={path}
+                passHref
+                className={`${styles.linkDecoration}`}
+              >
+                <Typography variant="body1" className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                  sx={{ mx: 2, }}>
+                  {page}
+                </Typography>
+              </Link>
+            )
+          })}
         </Box>
 
         {/* Mobile menu button */}
@@ -129,19 +129,24 @@ export default function TopMenu() {
       onClose={toggleDrawer(false)}
     >
       <List sx={{ mt: 2, width: 250 }}>
-        {pages.map((page) => (
-          <ListItem key={page} disablePadding>
-            <Link
-              href={page === "Custom Recipe" ? "/" : `/${page.toLowerCase().replace(" ", "-")}`}
-              passHref
-              className={`${styles.linkDecoration}`}
-            >
-              <ListItemButton onClick={toggleDrawer(false)} sx={{ width: 250 }}>
-                <ListItemText primary={page} sx={{ color: `${darkMode ? '#fff' : '#121212'}` }} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
+        {pages.map((page) => {
+          const path = `/${page.toLowerCase().replace(" ", "-")}`;
+          const isActive = pathname === path;
+
+          return (
+            <ListItem key={page} disablePadding className={isActive ? styles.drawerItem : ''}>
+              <Link
+                href={path}
+                passHref
+                className={`${styles.linkDecoration}`}
+              >
+                <ListItemButton onClick={toggleDrawer(false)} sx={{ width: 250 }}>
+                  <ListItemText primary={page} className={isActive ? styles.drawerItemActive : ''} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          )
+        })}
       </List>
     </Drawer>
   </>

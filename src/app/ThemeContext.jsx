@@ -38,6 +38,15 @@ export default function ThemeContextProvider({ children, isDarkMode = false }) {
     }
   }, []);
 
+  useEffect(() => {
+    // Apply or remove the .dark class on <body>
+    if (darkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   const theme = darkMode ? darkTheme : lightTheme;
 
   return (

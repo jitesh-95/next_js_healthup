@@ -25,7 +25,7 @@ const Footer = () => {
         py: 2,
         borderTop: `1px solid ${darkMode ? 'rgb(57, 57, 57)' : 'rgb(212, 210, 210)'}`,
         boxShadow: 'none',
-        backgroundColor: `${darkMode ? 'rgba(0, 0, 0, 0.72)' : 'rgba(241, 235, 235, 0.72)'}`, // translucent white
+        backgroundColor: `${darkMode ? 'rgba(0, 0, 0, 0.72)' : 'rgb(242,224,248)'}`, // translucent white
       }}
     >
       <Typography variant="body2">Driven by code. Inspired by health ❤️</Typography>
